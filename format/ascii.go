@@ -89,11 +89,11 @@ const RhinoAppID = "Rhino"
 func (f *ASCII) WriteXData(appid string, xdata map[string]string) {
 	if len(xdata) > 0 {
 		f.WriteString(1001, appid)
-		f.WriteString(1002, "{")
 		for k, v := range xdata {
+			f.WriteString(1002, "{")
 			f.WriteString(1000, k)
 			f.WriteString(1000, v)
+			f.WriteString(1002, "}")
 		}
-		f.WriteString(1002, "}")
 	}
 }
