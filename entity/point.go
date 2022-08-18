@@ -1,13 +1,14 @@
 package entity
 
 import (
-	"github.com/yofu/dxf/format"
+	"github.com/shpeliving/go-dxf/format"
 )
 
 // Point represents POINT Entity.
 type Point struct {
 	*entity
 	Coord []float64 // 10, 20, 30
+	XData map[string]string
 }
 
 // IsEntity is for Entity interface.
@@ -20,6 +21,7 @@ func NewPoint(coord ...float64) *Point {
 	p := &Point{
 		entity: NewEntity(POINT),
 		Coord:  []float64{0.0, 0.0, 0.0},
+		XData:  make(map[string]string),
 	}
 	ln := len(coord)
 	if ln == 0 {
@@ -36,6 +38,10 @@ func NewPoint(coord ...float64) *Point {
 	return p
 }
 
+func (p *Point) AppendXData(key, val string) {
+	p.XData[key] = val
+}
+
 // Format writes data to formatter.
 func (p *Point) Format(f format.Formatter) {
 	p.entity.Format(f)
@@ -43,6 +49,7 @@ func (p *Point) Format(f format.Formatter) {
 	for i := 0; i < 3; i++ {
 		f.WriteFloat((i+1)*10, p.Coord[i])
 	}
+	f.WriteXData(format.RhinoAppID, p.XData)
 }
 
 // String outputs data using default formatter.

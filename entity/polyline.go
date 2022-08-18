@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/yofu/dxf/format"
+	"github.com/shpeliving/go-dxf/format"
 )
 
 // Polyline represents POLYLINE Entity.
@@ -10,6 +10,7 @@ type Polyline struct {
 	Flag      int
 	size      int
 	Vertices  []*Vertex
+	XData     map[string]string
 	endhandle int
 }
 
@@ -26,9 +27,14 @@ func NewPolyline() *Polyline {
 		Flag:      8,
 		size:      0,
 		Vertices:  vs,
+		XData:     make(map[string]string),
 		endhandle: 0,
 	}
 	return p
+}
+
+func (p *Polyline) AppendXData(key, val string) {
+	p.XData[key] = val
 }
 
 // Format writes data to formatter.
@@ -43,6 +49,7 @@ func (p *Polyline) Format(f format.Formatter) {
 	for _, v := range p.Vertices {
 		v.Format(f)
 	}
+	f.WriteXData(format.RhinoAppID, p.XData)
 	f.WriteString(0, "SEQEND")
 	f.WriteHex(5, p.endhandle)
 	f.WriteString(100, "AcDbEntity")

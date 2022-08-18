@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/yofu/dxf/format"
+	"github.com/shpeliving/go-dxf/format"
 )
 
 // LwPolyline represents LWPOLYLINE Entity.
@@ -10,11 +10,16 @@ type LwPolyline struct {
 	Num      int // 90
 	Closed   bool
 	Vertices [][]float64
+	XData    map[string]string
 }
 
 // IsEntity is for Entity interface.
 func (l *LwPolyline) IsEntity() bool {
 	return true
+}
+
+func (l *LwPolyline) AppendXData(key, val string) {
+	l.XData[key] = val
 }
 
 // NewLwPolyline creates a new LwPolyline.
@@ -28,6 +33,7 @@ func NewLwPolyline(size int) *LwPolyline {
 		Num:      size,
 		Closed:   false,
 		Vertices: vs,
+		XData:    make(map[string]string),
 	}
 	return l
 }
@@ -47,6 +53,7 @@ func (l *LwPolyline) Format(f format.Formatter) {
 			f.WriteFloat((j+1)*10, l.Vertices[i][j])
 		}
 	}
+	f.WriteXData(format.RhinoAppID, l.XData)
 }
 
 // String outputs data using default formatter.

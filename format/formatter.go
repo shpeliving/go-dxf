@@ -19,4 +19,5 @@ type Formatter interface {
 	WriteHex(num int, h int)
 	WriteInt(num int, val int)
 	WriteFloat(num int, val float64)
+	WriteXData(appid string, xdata map[string]string)
 }

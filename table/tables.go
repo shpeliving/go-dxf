@@ -2,7 +2,7 @@
 package table
 
 import (
-	"github.com/yofu/dxf/format"
+	"github.com/shpeliving/go-dxf/format"
 )
 
 // Tables represents TABLES section.
@@ -26,6 +26,7 @@ func New() Tables {
 	t[5] = NewTable("UCS")
 	t[6] = NewTable("APPID")
 	t[6].Add(NewAppID("ACAD"))
+	t[6].Add(NewAppID("Rhino"))
 	t[7] = NewTable("DIMSTYLE")
 	t[8] = NewTable("BLOCK_RECORD")
 	t[8].Add(NewBlockRecord("*Model_Space"))

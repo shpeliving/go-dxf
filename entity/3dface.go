@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/yofu/dxf/format"
+	"github.com/shpeliving/go-dxf/format"
 )
 
 // ThreeDFace represents 3DFACE Entity.
@@ -9,11 +9,16 @@ type ThreeDFace struct {
 	*entity
 	Points [][]float64
 	Flag   int // 70
+	XData  map[string]string
 }
 
 // IsEntity is for Entity interface.
 func (f *ThreeDFace) IsEntity() bool {
 	return true
+}
+
+func (f *ThreeDFace) AppendXData(key, val string) {
+	f.XData[key] = val
 }
 
 // New3DFace creates a new ThreeDFace.
@@ -25,7 +30,8 @@ func New3DFace() *ThreeDFace {
 			[]float64{0.0, 0.0, 0.0},
 			[]float64{0.0, 0.0, 0.0},
 		},
-		Flag: 0,
+		Flag:  0,
+		XData: make(map[string]string),
 	}
 	return f
 }
@@ -42,6 +48,7 @@ func (f *ThreeDFace) Format(fm format.Formatter) {
 	if f.Flag != 0 {
 		fm.WriteInt(70, f.Flag)
 	}
+	fm.WriteXData(format.RhinoAppID, f.XData)
 }
 
 // String outputs data using default formatter.

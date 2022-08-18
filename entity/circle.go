@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/yofu/dxf/format"
+	"github.com/shpeliving/go-dxf/format"
 )
 
 // Circle represents CIRCLE Entity.
@@ -10,11 +10,16 @@ type Circle struct {
 	Center    []float64 // 10, 20, 30
 	Radius    float64   // 40
 	Direction []float64 // 210, 220, 230
+	XData     map[string]string
 }
 
 // IsEntity is for Entity interface.
 func (c *Circle) IsEntity() bool {
 	return true
+}
+
+func (c *Circle) AppendXData(key, val string) {
+	c.XData[key] = val
 }
 
 // NewCircle creates a new Circle.
@@ -24,6 +29,7 @@ func NewCircle() *Circle {
 		Center:    []float64{0.0, 0.0, 0.0},
 		Radius:    0.0,
 		Direction: []float64{0.0, 0.0, 1.0},
+		XData:     make(map[string]string),
 	}
 	return c
 }
@@ -39,6 +45,7 @@ func (c *Circle) Format(f format.Formatter) {
 	for i := 0; i < 3; i++ {
 		f.WriteFloat(200+(i+1)*10, c.Direction[i])
 	}
+	f.WriteXData(format.RhinoAppID, c.XData)
 }
 
 // String outputs data using default formatter.

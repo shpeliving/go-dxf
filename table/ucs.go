@@ -1,8 +1,8 @@
 package table
 
 import (
-	"github.com/yofu/dxf/format"
-	"github.com/yofu/dxf/handle"
+	"github.com/shpeliving/go-dxf/format"
+	"github.com/shpeliving/go-dxf/handle"
 )
 
 // UCS represents UCS SymbolTable.

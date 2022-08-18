@@ -3,7 +3,7 @@ package entity
 import (
 	"math"
 
-	"github.com/yofu/dxf/format"
+	"github.com/shpeliving/go-dxf/format"
 )
 
 // Line represents LINE Entity.
@@ -11,6 +11,7 @@ type Line struct {
 	*entity
 	Start []float64 // 10, 20, 30
 	End   []float64 // 11, 21, 31
+	XData map[string]string
 }
 
 // IsEntity is for Entity interface.
@@ -24,8 +25,13 @@ func NewLine() *Line {
 		entity: NewEntity(LINE),
 		Start:  []float64{0.0, 0.0, 0.0},
 		End:    []float64{0.0, 0.0, 0.0},
+		XData:  make(map[string]string),
 	}
 	return l
+}
+
+func (l *Line) AppendXData(key, val string) {
+	l.XData[key] = val
 }
 
 // Format writes data to formatter.
@@ -38,6 +44,7 @@ func (l *Line) Format(f format.Formatter) {
 	for i := 0; i < 3; i++ {
 		f.WriteFloat((i+1)*10+1, l.End[i])
 	}
+	f.WriteXData(format.RhinoAppID, l.XData)
 }
 
 // String outputs data using default formatter.

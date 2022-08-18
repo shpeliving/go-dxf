@@ -10,9 +10,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/yofu/dxf/color"
-	"github.com/yofu/dxf/drawing"
-	"github.com/yofu/dxf/table"
+	"github.com/shpeliving/go-dxf/color"
+	"github.com/shpeliving/go-dxf/drawing"
+	"github.com/shpeliving/go-dxf/table"
 )
 
 // Default values.

@@ -6,13 +6,13 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/yofu/dxf/block"
-	"github.com/yofu/dxf/color"
-	"github.com/yofu/dxf/drawing"
-	"github.com/yofu/dxf/entity"
-	"github.com/yofu/dxf/header"
-	"github.com/yofu/dxf/insunit"
-	"github.com/yofu/dxf/table"
+	"github.com/shpeliving/go-dxf/block"
+	"github.com/shpeliving/go-dxf/color"
+	"github.com/shpeliving/go-dxf/drawing"
+	"github.com/shpeliving/go-dxf/entity"
+	"github.com/shpeliving/go-dxf/header"
+	"github.com/shpeliving/go-dxf/insunit"
+	"github.com/shpeliving/go-dxf/table"
 )
 
 // setFloat sets a floating point number to a variable using given function.

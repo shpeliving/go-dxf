@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/yofu/dxf/format"
+	"github.com/shpeliving/go-dxf/format"
 )
 
 // Vertex represents VERTEX Entity.
@@ -9,11 +9,16 @@ type Vertex struct {
 	*entity
 	Flag  int
 	Coord []float64
+	XData map[string]string
 }
 
 // IsEntity is for Entity interface.
 func (v *Vertex) IsEntity() bool {
 	return true
+}
+
+func (v *Vertex) AppendXData(key, val string) {
+	v.XData[key] = val
 }
 
 // NewVertex creates a new Vertex.
@@ -22,6 +27,7 @@ func NewVertex(x, y, z float64) *Vertex {
 		entity: NewEntity(VERTEX),
 		Flag:   32,
 		Coord:  []float64{x, y, z},
+		XData:  make(map[string]string),
 	}
 	return v
 }
@@ -35,6 +41,7 @@ func (v *Vertex) Format(f format.Formatter) {
 		f.WriteFloat((i+1)*10, v.Coord[i])
 	}
 	f.WriteInt(70, v.Flag)
+	f.WriteXData(format.RhinoAppID, v.XData)
 }
 
 // String outputs data using default formatter.

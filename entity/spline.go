@@ -1,7 +1,7 @@
 package entity
 
 import (
-	"github.com/yofu/dxf/format"
+	"github.com/shpeliving/go-dxf/format"
 )
 
 // Spline represents LINE Entity.
@@ -14,16 +14,21 @@ type Spline struct {
 	Controls  [][]float64 // 73, 10, 20, 30
 	Fits      [][]float64 // 74, 11, 21, 31
 	Tolerance []float64   // 42, 43, 44
+	XData     map[string]string
 }
 
 // IsEntity is for Entity interface.
-func (l *Spline) IsEntity() bool {
+func (s *Spline) IsEntity() bool {
 	return true
+}
+
+func (s *Spline) AppendXData(key, val string) {
+	s.XData[key] = val
 }
 
 // NewSpline creates a new Spline.
 func NewSpline() *Spline {
-	l := &Spline{
+	s := &Spline{
 		entity:    NewEntity(SPLINE),
 		Normal:    []float64{0.0, 0.0, 1.0},
 		Flag:      1064,
@@ -32,8 +37,9 @@ func NewSpline() *Spline {
 		Controls:  nil,
 		Fits:      nil,
 		Tolerance: []float64{0.000000001, 0.0000000001, 0.0000000001},
+		XData:     make(map[string]string),
 	}
-	return l
+	return s
 }
 
 // Format writes data to formatter.
@@ -64,6 +70,7 @@ func (s *Spline) Format(f format.Formatter) {
 			f.WriteFloat((i+1)*10+1, ft[i])
 		}
 	}
+	f.WriteXData(format.RhinoAppID, s.XData)
 }
 
 // String outputs data using default formatter.
