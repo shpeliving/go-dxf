@@ -301,11 +301,12 @@ func (d *Drawing) ThreeDFace(points [][]float64) (*entity.ThreeDFace, error) {
 }
 
 // Text creates a new TEXT str at (x, y, z) with given height.
-func (d *Drawing) Text(str string, x, y, z, height float64) (*entity.Text, error) {
+func (d *Drawing) Text(str string, x, y, z, height float64, rotation float64) (*entity.Text, error) {
 	t := entity.NewText()
 	t.Coord1 = []float64{x, y, z}
 	t.Height = height
 	t.Value = str
+	t.Rotation = rotation
 	t.SetLayer(d.CurrentLayer)
 	t.Style = d.CurrentStyle
 	t.WidthFactor = t.Style.WidthFactor
